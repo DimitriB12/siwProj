@@ -15,11 +15,11 @@
         </tr>
         <tr>
             <td>First Name</td>
-            <td th:text="${user.firstName}">...</td>
+            <td th:text="${loggedUser.firstName}">...</td>
         </tr>
         <tr>
             <td>Last Name</td>
-            <td th:text="${user.lastName}">...</td>
+            <td th:text="${loggedUser.lastName}">...</td>
         </tr>
         <tr>
             <td>Role</td>
@@ -27,11 +27,11 @@
         </tr>
         <tr>
             <td>Registered at: </td>
-            <td th:text="${user.creationTimestamp}">...</td>
+            <td th:text="${loggedUser.creationTimestamp}">...</td>
         </tr>
         <tr>
             <td>Last Update at:</td>
-            <td th:text="${user.lastUpdateTimestamp}">...</td>
+            <td th:text="${loggedUser.lastUpdateTimestamp}">...</td>
         </tr>
     </table>
 </body>

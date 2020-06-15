@@ -57,7 +57,7 @@ public class UserController {
         User loggedUser = sessionData.getLoggedUser();
         Credentials credentials = sessionData.getLoggedCredentials();
         System.out.println(credentials.getPassword());
-        model.addAttribute("user", loggedUser);
+        model.addAttribute("loggedUser", loggedUser);
         model.addAttribute("credentials", credentials);
 
         return "userProfile";
