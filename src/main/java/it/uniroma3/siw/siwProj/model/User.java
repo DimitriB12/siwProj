@@ -12,6 +12,7 @@ import java.util.Objects;
  * manages its associations with other domain entities,
  * e.g. Projects, Tasks, ecc.
  */
+//modifica
 @Entity
 @Table(name = "users")
 public class User {
