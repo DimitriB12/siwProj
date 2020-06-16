@@ -29,6 +29,8 @@ public class ProjectValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "required");
 		if(name.length() < this.MIN_NAME_LENGHT || name.length() > this.MAX_NAME_LENGHT)
 			errors.rejectValue("name", "size");
+		
+		
 		if(description.length() > this.MAX_DESCRIPTION_LENGHT)
 			errors.rejectValue("description", "size");
 		

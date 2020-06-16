@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.uniroma3.siw.siwProj.controller.session.SessionData;
 import it.uniroma3.siw.siwProj.controller.validation.ProjectValidator;
+import it.uniroma3.siw.siwProj.model.ContenitoreStringhe;
+import it.uniroma3.siw.siwProj.model.Credentials;
 import it.uniroma3.siw.siwProj.model.Project;
 import it.uniroma3.siw.siwProj.model.User;
+import it.uniroma3.siw.siwProj.service.CredentialsService;
 import it.uniroma3.siw.siwProj.service.ProjectService;
 import it.uniroma3.siw.siwProj.service.UserService;
 
@@ -34,6 +37,9 @@ public class ProjectController {
 	
 	@Autowired
 	SessionData sessionData;
+	
+	@Autowired
+	CredentialsService credentialsService;
 	
 	/**
 	 * This method is called when a GET request is sent by the user to URL "/projects".
@@ -103,6 +109,37 @@ public class ProjectController {
 		model.addAttribute("loggedUser", loggedUser);
 		return "addProject";
 	}
+	
+	
+	
+	@RequestMapping(value = {"/shareProject"}, method = RequestMethod.GET)
+	public String shereProject(Model model) {
+		model.addAttribute("projectUserForm", new ContenitoreStringhe());
+		
+		return "shareProjectWith";
+	}
+	
+	@RequestMapping(value = {"/shareProject"}, method = RequestMethod.POST)
+	public String shereProject(@ModelAttribute("projectUserForm") ContenitoreStringhe projectUserForm, Model model) {
+		
+     User loggedUser= this.sessionData.getLoggedUser();
+	
+	if(this.projectService.findProjectByName(projectUserForm.getNameProject()) != null
+		  && this.credentialsService.getCredentials(projectUserForm.getUserName()) !=null
+		  && !loggedUser.equals(this.credentialsService.getCredentials(projectUserForm.getUserName()).getUser())) {
+		    Project project =	this.projectService.findProjectByName(projectUserForm.getNameProject());
+		    User user = this.credentialsService.getCredentials(projectUserForm.getUserName()).getUser();
+		    this.projectService.shareProjectWithUser(project, user);
+		    return "redirect:/projects/" + project.getId();
+		}
+			
+		
+		return "redirect:/projects";
+	}
+	
+	
+	
+	  
 
 
 }

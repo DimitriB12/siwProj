@@ -1,5 +1,6 @@
 package it.uniroma3.siw.siwProj.service;
 
+import it.uniroma3.siw.siwProj.model.Credentials;
 import it.uniroma3.siw.siwProj.model.Project;
 import it.uniroma3.siw.siwProj.model.User;
 import it.uniroma3.siw.siwProj.repository.ProjectRepository;
@@ -9,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +33,12 @@ public class ProjectService {
     public Project getProject(long id) {
         Optional<Project> result = this.projectRepository.findById(id);
         return result.orElse(null);
+    }
+    
+    @Transactional
+    public Project findProjectByName(String projectName) {
+    	Optional<Project> result = this.projectRepository.findByName(projectName);
+    	return result.orElse(null);
     }
 
     /**
@@ -64,10 +72,21 @@ public class ProjectService {
         return this.projectRepository.save(project);
     }
     
+   
+    
     
     @Transactional
     public List<Project> retriveProjectsOwnedBy(User loggedUser){
        List<Project> result = this.projectRepository.findByOwner(loggedUser);
        return result;
+    }
+    
+    @Transactional
+    public List<Project> getAllProjects() {
+        List<Project> result = new ArrayList<>();
+        Iterable<Project> iterable = this.projectRepository.findAll();
+        for(Project projects : iterable)
+            result.add(projects);
+        return result;
     }
  }
