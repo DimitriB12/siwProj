@@ -83,8 +83,8 @@ public class ProjectController {
 	@RequestMapping(value = {"/projects/add"}, method = RequestMethod.GET)
 	public String createProjectForm(Model model) {
 		User loggedUser = sessionData.getLoggedUser();
-	model.addAttribute("loggedUser", loggedUser);
-	model.addAttribute("projectForm", new Project());
+	    model.addAttribute("loggedUser", loggedUser);
+	    model.addAttribute("projectForm", new Project());
 		return "addProject";
 	}
 

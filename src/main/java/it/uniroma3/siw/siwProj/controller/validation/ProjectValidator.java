@@ -4,8 +4,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import it.uniroma3.siw.siwProj.model.Project;
+import it.uniroma3.siw.siwProj.service.ProjectService;
 
 @Component
 public class ProjectValidator implements Validator {
@@ -14,7 +16,8 @@ public class ProjectValidator implements Validator {
 	final Integer MIN_NAME_LENGHT = 2;
 	final Integer MAX_DESCRIPTION_LENGHT=1000;
 
-	
+	@Autowired
+	ProjectService projectService;
 
 	@Override
 	public void validate(Object o, Errors errors) {
