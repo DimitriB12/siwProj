@@ -46,6 +46,8 @@ public class ProjectController {
 	public String myOwnedProjects(Model model) {
 		User loggedUser = sessionData.getLoggedUser();
 		List<Project> projectsList = projectService.retriveProjectsOwnedBy(loggedUser);
+		if(projectsList.isEmpty())
+	     	System.out.println("EMPTY");
 		model.addAttribute("loggedUser", loggedUser);
 		model.addAttribute("projectsList", projectsList);
 		return "myOwnedProjects";
