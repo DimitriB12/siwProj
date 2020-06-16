@@ -74,4 +74,14 @@ public class CredentialsService {
             result.add(credentials);
         return result;
     }
+    
+    /**
+     * This method uses the userName to delete credentials from the DB.
+     * @param username of the Credentials to be deleted.
+     */
+    @Transactional
+	public void deleteCredentials(String username) {
+    	Credentials credentials= this.getCredentials(username);
+		this.credentialsRepository.delete(credentials);
+	}
 }
