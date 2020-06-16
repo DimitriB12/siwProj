@@ -63,4 +63,11 @@ public class ProjectService {
         project.addMember(user);
         return this.projectRepository.save(project);
     }
-}
+    
+    
+    @Transactional
+    public List<Project> retriveProjectsOwnedBy(User loggedUser){
+       List<Project> result = this.projectRepository.findByMembers(loggedUser);
+       return result;
+    }
+ }

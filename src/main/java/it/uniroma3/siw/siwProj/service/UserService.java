@@ -1,4 +1,5 @@
 package it.uniroma3.siw.siwProj.service;
+import it.uniroma3.siw.siwProj.model.Project;
 import it.uniroma3.siw.siwProj.model.User;
 import it.uniroma3.siw.siwProj.repository.UserRepository;
 
@@ -54,5 +55,11 @@ public class UserService {
         for(User user : iterable)
             result.add(user);
         return result;
+    }
+    
+    @Transactional
+    public List<User> getMembers(Project project){
+    	List<User> members = userRepository.findByVisibleProjects(project);
+    	return members;
     }
 }
