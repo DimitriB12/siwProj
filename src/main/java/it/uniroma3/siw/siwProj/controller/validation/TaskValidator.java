@@ -14,9 +14,9 @@ import it.uniroma3.siw.siwProj.service.TaskService;
 @Component
 public class TaskValidator implements Validator {
 	
-	final Integer MAX_NAME_LENGHT = 100;
-	final Integer MIN_NAME_LENGHT = 2;
-	final Integer MAX_DESCRIPTION_LENGHT=1000;
+	final Integer MAX_NAME_LENGTH = 100;
+	final Integer MIN_NAME_LENGTH = 2;
+	final Integer MAX_DESCRIPTION_LENGTH=1000;
 
 	@Autowired
 	TaskService taskService;
@@ -29,9 +29,12 @@ public class TaskValidator implements Validator {
 		String description = task.getDescription().trim();
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "required");
-		if(name.length() < this.MIN_NAME_LENGHT || name.length() > this.MAX_NAME_LENGHT)
+
+		if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH)
 			errors.rejectValue("name", "size");
-		if(description.length() > this.MAX_DESCRIPTION_LENGHT)
+		else if (this.taskService.findTaskByName(name) != null)
+			errors.rejectValue("name", "duplicate");
+		if(description.length() > this.MAX_DESCRIPTION_LENGTH)
 			errors.rejectValue("description", "size");
 		
 		
