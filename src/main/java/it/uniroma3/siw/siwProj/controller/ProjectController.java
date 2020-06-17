@@ -250,9 +250,7 @@ public class ProjectController {
     	this.projectService.deleteProject(this.projectService.findProjectByName(name));
     	return "redirect:/projects";
     }
-<<<<<<< HEAD
-=======
-	
+
     
    // Add Task to a Project 
     
@@ -316,6 +314,6 @@ public class ProjectController {
     }
     
 
->>>>>>> 8c85297c1921c6062975a4a47d30dd0b08dc7ad1
+
 
 }
