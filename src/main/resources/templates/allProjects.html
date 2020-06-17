@@ -7,7 +7,7 @@
     <title>siwProject</title>
 </head>
 <body>
-<h1>All My Projects</h1>
+<h1>All Projects</h1>
 <div>
 	<table class="table table-hover">
 		<thead>
@@ -23,7 +23,7 @@
 			<td th:text="${project.description}"></td>
 			
 			<td>
-				<form method="POST" th:action="@{/deleteProject/{name}/delete(name=${project.name})}">
+				<form method="POST" th:action="@{/admin/projects/{name}/delete(name=${project.name})}">
 				<button type="submit" name="submit" value="value">DELETE</button>
 				</form>
 			</td>
