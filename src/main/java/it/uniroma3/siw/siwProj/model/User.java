@@ -65,6 +65,9 @@ public class User {
         this.ownedProjects = new ArrayList<>();
         this.visibleProjects = new ArrayList<>();
     }
+    
+//    @OneToMany(mappedBy = "tasks")
+//    public List<Task> listTasks;
 
     public User(String firstName, String lastName) {
         this();

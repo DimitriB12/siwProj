@@ -55,9 +55,7 @@ public class TaskController {
     	for(Project project : projectsList) {
     		tasksList.addAll(project.getTasks());
     	}
-    	
-    
-    	//model.addAttribute("loggedUser", loggedUser);
+     
     	model.addAttribute("tasksList", tasksList);
     	return "taskToEdit";
     }
@@ -69,7 +67,7 @@ public class TaskController {
     
       this.taskService.setCompleted(this.taskService.findTaskByName(name));
     	
-       return "redirect:/projects";
+      return "redirect:/projects";
     }
 	
 	
