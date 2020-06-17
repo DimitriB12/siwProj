@@ -23,7 +23,17 @@
       <li th:each="task : ${project.tasks}">
         <div th:text="${task.name}"></div>
         <div th:text="${task.description}" style="color:gray"></div>
+        <div th:if="${task.completed}">completed is true.</div>
+        <div th:unless="${task.completed}">completed is false.</div>
+        
 </ul>
+
+
+<h4><a href="/projects">My Projects</a></h4>
+
+<h4><a href="/project/addTask">Add Task</a></h4>
+
+<h4><a href="/project/deleteTask">Delete Task</a></h4>
 
 
 

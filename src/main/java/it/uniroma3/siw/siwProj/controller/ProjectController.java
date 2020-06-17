@@ -1,5 +1,6 @@
 package it.uniroma3.siw.siwProj.controller;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.uniroma3.siw.siwProj.controller.session.SessionData;
 import it.uniroma3.siw.siwProj.controller.validation.ProjectValidator;
+import it.uniroma3.siw.siwProj.controller.validation.TaskValidator;
 import it.uniroma3.siw.siwProj.model.ContenitoreStringhe;
 import it.uniroma3.siw.siwProj.model.Credentials;
 import it.uniroma3.siw.siwProj.model.Project;
+import it.uniroma3.siw.siwProj.model.Task;
 import it.uniroma3.siw.siwProj.model.User;
 import it.uniroma3.siw.siwProj.service.CredentialsService;
 import it.uniroma3.siw.siwProj.service.ProjectService;
+import it.uniroma3.siw.siwProj.service.TaskService;
 import it.uniroma3.siw.siwProj.service.UserService;
 
 @Controller
@@ -40,6 +44,12 @@ public class ProjectController {
 	
 	@Autowired
 	CredentialsService credentialsService;
+	
+	@Autowired
+	TaskValidator taskValidator;
+	
+	@Autowired
+	TaskService taskService;
 	
 	/**
 	 * This method is called when a GET request is sent by the user to URL "/projects".
@@ -205,7 +215,68 @@ public class ProjectController {
     	return "redirect:/projects";
     }
 	
-	  
+    
+   // Add Task to a Project 
+    
+    @RequestMapping(value= { "/project/addTask" }, method = RequestMethod.GET)
+    public String addTask(Model model) {
+    	
+    	model.addAttribute("taskForm", new Task());
+    	model.addAttribute("projName", new ContenitoreStringhe());
+    	return "addTask";
+    }
+    
+    @RequestMapping(value= { "/project/addTask" }, method = RequestMethod.POST)
+    public String addTaskToProject(Model model, @Valid @ModelAttribute("taskForm") Task task,
+    		                       BindingResult taskBindingResult,
+    		                       @ModelAttribute("projName") ContenitoreStringhe projName) {
+    	
+    	
+    	User loggedUser = this.sessionData.getLoggedUser();
+    	List<Project> listProjects = this.projectService.retriveProjectsOwnedBy(loggedUser);
+    	
+    	this.taskValidator.validate(task, taskBindingResult);
+    	if(!taskBindingResult.hasErrors() && this.projectService.findProjectByName(projName.getNameProject()) != null 
+    			&& listProjects.contains(this.projectService.findProjectByName(projName.getNameProject()))) {
+    		Project project = this.projectService.findProjectByName(projName.getNameProject());
+    		project.getTasks().add(task);
+    		this.taskService.saveTask(task);
+    		return "redirect:/projects/" + project.getId();
+    		
+    	}
+    	
+    	return "addTask";
+    }
+    
+  
+    //Delete task From Project
+    
+    @RequestMapping(value = {"/project/deleteTask" }, method = RequestMethod.GET)
+    public String taskDeleteList(Model model) {
+    	User loggedUser = sessionData.getLoggedUser();
+    	List<Project> projectsList = this.projectService.retriveProjectsOwnedBy(loggedUser);
+    	List<Task> tasksList = new LinkedList<Task>();
+    	
+    	for(Project project : projectsList) {
+    		tasksList.addAll(project.getTasks());
+    	}
+    	
+    
+    	//model.addAttribute("loggedUser", loggedUser);
+    	model.addAttribute("tasksList", tasksList);
+    	return "taskToDelete";
+    }
+    
+    
+  
+    @RequestMapping(value= { "/project/deleteTask/{name}/delete" }, method = RequestMethod.POST)
+    public String removeTask(Model model, @PathVariable String name) {
+    
+    
+    	this.taskService.deleteTask(this.taskService.findTaskByName(name));
+    	return "redirect:/projects";
+    }
+    
 
 
 }

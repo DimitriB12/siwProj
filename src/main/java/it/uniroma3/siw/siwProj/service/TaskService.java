@@ -1,5 +1,6 @@
 package it.uniroma3.siw.siwProj.service;
 
+import it.uniroma3.siw.siwProj.model.Project;
 import it.uniroma3.siw.siwProj.model.Task;
 import it.uniroma3.siw.siwProj.repository.TaskRepository;
 
@@ -58,5 +59,11 @@ public class TaskService {
     @Transactional
     public void deleteTask(Task task) {
         this.taskRepository.delete(task);
+    }
+    
+    @Transactional
+    public Task findTaskByName(String taskName) {
+    	Optional<Task> result = this.taskRepository.findByName(taskName);
+    	return result.orElse(null);
     }
 }
