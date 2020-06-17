@@ -5,6 +5,7 @@ import it.uniroma3.siw.siwProj.model.Project;
 import it.uniroma3.siw.siwProj.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This interface is a CrudRepository for repository operations on Projects.
@@ -26,5 +27,7 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
      * @return the List of projects owned by the passed
      */
     public List<Project> findByOwner(User owner);
+    
+    public Optional<Project> findByName(String name);
 }
 

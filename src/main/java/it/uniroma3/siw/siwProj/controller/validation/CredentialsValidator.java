@@ -42,6 +42,7 @@ public class CredentialsValidator implements Validator {
        
        if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH)
             errors.rejectValue("password", "size");
+       
     }
 
     @Override
