@@ -3,9 +3,11 @@ package it.uniroma3.siw.siwProj.controller;
 import it.uniroma3.siw.siwProj.controller.session.SessionData;
 import it.uniroma3.siw.siwProj.controller.validation.UserValidator;
 import it.uniroma3.siw.siwProj.model.Credentials;
+import it.uniroma3.siw.siwProj.model.Project;
 import it.uniroma3.siw.siwProj.model.User;
 import it.uniroma3.siw.siwProj.repository.UserRepository;
 import it.uniroma3.siw.siwProj.service.CredentialsService;
+import it.uniroma3.siw.siwProj.service.ProjectService;
 
 import java.util.List;
 
@@ -37,6 +39,9 @@ public class UserController {
     
     @Autowired
 	CredentialsService credentialService;
+
+	@Autowired
+    ProjectService projectService;
 
     /**
      * This method is called when a GET request is sent by the user to URL "/users/user_id".
@@ -71,11 +76,11 @@ public class UserController {
     }
 
     /**
-     * This method is called when a GET request is sent by the user to URL "/users/user_id".
-     * This method prepares and dispatches the User registration view.
+     * This method is called when a GET request is sent by the user to URL "/admin".
+     * This method prepares and dispatches the admin view.
      *
      * @param model the Request model
-     * @return the name of the target view, that in this case is "register"
+     * @return the name of the target view, that in this case is "admin"
      */
     @RequestMapping(value = { "/admin" }, method = RequestMethod.GET)
     public String admin(Model model) {
@@ -86,7 +91,7 @@ public class UserController {
     
     
     /**
-     * This method is called when a GET request is snet by the User to the URL:"/admin/users".
+     * This method is called when a GET request is sent by the User to the URL:"/admin/users".
      * This method prepares and dispatches the view with the list of all users for admin usage. 
      * @param model the Request model
      * @return the name of the target view
@@ -111,6 +116,35 @@ public class UserController {
     public String removeUser(Model model, @PathVariable String username) {
     	this.credentialService.deleteCredentials(username);
     	return "redirect:/admin/users";
+    }
+    
+    /**
+     * This method is called when a GET request is sent by the User to the URL:"/admin/projects".
+     * This method prepares and dispatches the view with the list of all projects for admin usage. 
+     * @param model the Request model
+     * @return the name of the target view
+     */
+    @RequestMapping(value = {"/admin/projects" }, method = RequestMethod.GET)
+    public String projectsList(Model model) {
+    	User loggedUser = sessionData.getLoggedUser();
+    	List<Project> allProjects = this.projectService.getAllProjects();
+    	model.addAttribute("loggedUser", loggedUser);
+    	model.addAttribute("projectsList", allProjects);
+    	return "allProjects";
+    }
+    
+    
+    /**This method is called when a POST request is sent by the User to the URL:"/admin/projects/{name}/delete",
+     * and deletes the Project identified by the by the passed name  {name}.
+     * @param model the Request model
+     * @param name of the Project to be deleted
+     * @return the name of the target view
+     */
+    @RequestMapping(value= { "/admin/projects/{name}/delete" }, method = RequestMethod.POST)
+    public String removeProject(Model model, @PathVariable String name ) {
+    	Project project = this.projectService.findProjectByName(name);
+    	this.projectService.deleteProject(project);;
+    	return "redirect:/admin/projects";
     }
 
 }
