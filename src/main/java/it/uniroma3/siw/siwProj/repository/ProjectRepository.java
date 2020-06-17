@@ -19,7 +19,7 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
      * @param member the User to retrieve the visible projects of
      * @return the List of projects visible by the passed user
      */
-    public List<Project> findByMembers(User member);
+    public List<Project> findByMembers(User members);
 
     /**
      * Retrieve all Projects that are owned by the passed user

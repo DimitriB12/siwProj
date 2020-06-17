@@ -62,4 +62,6 @@ public class UserService {
     	List<User> members = userRepository.findByVisibleProjects(project);
     	return members;
     }
+    
+ 
 }

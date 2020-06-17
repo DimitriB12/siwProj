@@ -110,7 +110,7 @@ public class ProjectController {
 		return "addProject";
 	}
 	
-	
+	//******************DA MODIFICARE**********************
 	
 	@RequestMapping(value = {"/shareProject"}, method = RequestMethod.GET)
 	public String shereProject(Model model) {
@@ -138,6 +138,72 @@ public class ProjectController {
 	}
 	
 	
+	/**
+	 * This method is called when a GET request is sent by the user to URL "/projects".
+	 * This method prepares and dispatches a view showing all the project owned by the logged user.
+	 * 
+	 * @param model the Request model
+	 * @return the name of the target view, that is this case is "myOwnedProjects"
+	 */
+	@RequestMapping(value = {"/shared/projects" }, method = RequestMethod.GET)
+	public String projectsSharedWithMe(Model model) {
+		User loggedUser = sessionData.getLoggedUser();
+		List<Project> projectsList = projectService.retriveProjectsWithVisibility(loggedUser);
+		model.addAttribute("loggedUser", loggedUser);
+		model.addAttribute("projectsList", projectsList);
+		return "projectsSharedWithMe";
+	}
+	
+	@RequestMapping(value= {"/shared/projects/{projectId}"}, method = RequestMethod.GET)
+	public String projectsShared(Model model, @PathVariable Long projectId) {
+		User loggedUser = sessionData.getLoggedUser();
+		//if no project with the passed IO exists,
+		//redirect to the view with the list of my projects
+	    Project project= projectService.getProject(projectId);
+		if(project == null)
+			return "redirect:/shared/projects";
+		
+		//if i do not have access to any project with the passed ID
+		//redirect to the view with the list of my projects
+		List<User> members = userService.getMembers(project);
+		if(!project.getOwner().equals(loggedUser) && !members.contains(loggedUser))
+			return "redirect:/projects";
+		
+		model.addAttribute("loggedUser", loggedUser);
+		model.addAttribute("project", project);
+		model.addAttribute("members", members);
+		
+		return "project";
+	}
+
+	  /**
+     * This method is called when a GET request is snet by the User to the URL:"/admin/users".
+     * This method prepares and dispatches the view with the list of all users for admin usage. 
+     * @param model the Request model
+     * @return the name of the target view
+     */
+    @RequestMapping(value = {"/deleteProject" }, method = RequestMethod.GET)
+    public String projectsDeleteList(Model model) {
+    	User loggedUser = sessionData.getLoggedUser();
+    	List<Project> projectsList = this.projectService.retriveProjectsOwnedBy(loggedUser);
+    
+    	//model.addAttribute("loggedUser", loggedUser);
+    	model.addAttribute("projectsList", projectsList);
+    	return "projectToDelete";
+    }
+    
+    
+    /**This method is called when a POST request is sent by the User to the URL:"/admin/users/{username}/delete",
+     * and deletes the User with the Credentials identified by the by the passed username  {username}.
+     * @param model the Request model
+     * @param username of the Credentials to be deleted
+     * @return the name of the target view
+     */
+    @RequestMapping(value= { "/deleteProject/{name}/delete" }, method = RequestMethod.POST)
+    public String removeProject(Model model, @PathVariable String name) {
+    	this.projectService.deleteProject(this.projectService.findProjectByName(name));
+    	return "redirect:/projects";
+    }
 	
 	  
 

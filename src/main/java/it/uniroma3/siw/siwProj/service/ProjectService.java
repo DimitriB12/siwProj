@@ -89,4 +89,10 @@ public class ProjectService {
             result.add(projects);
         return result;
     }
+    
+    @Transactional
+    public List<Project> retriveProjectsWithVisibility(User loggedUser){
+    	List<Project> result = this.projectRepository.findByMembers(loggedUser);
+    	return result;
+    }
  }
