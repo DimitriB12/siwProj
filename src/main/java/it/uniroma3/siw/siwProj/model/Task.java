@@ -45,6 +45,9 @@ public class Task {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     public User worker;
+    
+    @OneToMany(mappedBy = "task")
+    private List<Comment> comments;
     /**
      * Timestamp for the instant this Task was created/loaded into the DB
      */
@@ -95,6 +98,10 @@ public class Task {
         this.lastUpdateTimestamp = LocalDateTime.now();
     }
 
+    
+    public void addComment(Comment comment) {
+    	this.getComments().add(comment);
+    }
 
     // GETTERS AND SETTERS
 
@@ -158,14 +165,25 @@ public class Task {
 	
 	
 	
-    public User getWorker() {
+    public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+	public User getWorker() {
 		return worker;
 	}
 
 	public void setWorker(User worker) {
 		this.worker = worker;
 	}
-
+    
+	
+	
+	
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
