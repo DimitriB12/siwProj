@@ -1,0 +1,19 @@
+CASI D'USO IMPLEMENTATI:
+
+AMMINISTRATORE:
+-DeleteUser: dopo aver fatto l'accesso come admin un utente è in grado di visualizzare ed eventualmente eliminare un qualsiasi altro utente
+-DeleteProject: Come per il caso d'uso precedente ma con un qualsiasi progetto.
+
+UTENTE:
+-SignUp: Attraverso la compilazione dei campi appositi un Utente può registrarsi
+-Login: Dopo esseresi registrato un Utente può effettuare l'accesso che quindi potrà interagire con
+->MyProjects: Permette all'utente di visualizzare tutti i Progetti da lui creati
+->ShareProject: Permette di condividere il progetto con un altro utente
+->CreateProject/DeleteProject: Creare/Eliminare un progetto da lui creato
+->AddTask/DeleteTask: Creare/cancellare un Task al progetto
+->AddTag/DeleteTag/UpdateTag: Creare/cancellare/aggiornare un Tag al/del progetto
+->AssignTask: assegnare un task a un user 
+->SharedWithMe: Visualizzare tutti i progetti condivisi con l'utente
+->ShowTasks: Visualizzare i Tasks assegnati 
+->Profile: Visualizzare le informazioni sul profilo 
+->CommentTask: tramite la visualizzazione di un task del progetto l'utente può scrivere e aggiungere un commento al Task 
