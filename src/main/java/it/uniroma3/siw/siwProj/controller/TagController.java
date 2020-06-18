@@ -1,5 +1,6 @@
 package it.uniroma3.siw.siwProj.controller;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -78,5 +80,36 @@ public class TagController {
 
 		return "addTag";
 	}
+	
+	/**
+	 * This method is called when a GET request is sent by the User to the URL:"/deleteTag".
+	 * This method prepares and dispatches the view with the list of all tags of the projects owned. 
+	 * @param model the Request model
+	 * @return the name of the target view, in this case "tagToDelete"
+	 */
+	@RequestMapping(value = {"/project/deleteTag"}, method = RequestMethod.GET)
+	public String tagDeleteList(Model model) {
+		User loggedUser = sessionData.getLoggedUser();
+		List<Project> projectsList = this.projectService.retriveProjectsOwnedBy(loggedUser);
+		List<Tag> tagsList = new LinkedList<Tag>();
 
+		for(Project project : projectsList) {
+			tagsList.addAll(project.getTags());
+		}
+		model.addAttribute("tagsList", tagsList);
+		return "tagToDelete";
 	}
+
+	/**This method is called when a POST request is sent by the User to the URL:"/deleteTag/{name}/delete",
+	 * and deletes the Tag identified by the by the passed name {name}.
+	 * @param model the Request model
+	 * @param name of the Tag to be deleted
+	 * @return the name of the target view, in this case a redirect to "/projects"
+	 */
+	@RequestMapping(value= {"/project/deleteTag/{name}/delete"}, method = RequestMethod.POST)
+	public String removeTask(Model model, @PathVariable String name) {
+		this.tagService.deleteTag(this.tagService.findTagByName(name));
+		return "redirect:/projects";
+	}
+
+}
