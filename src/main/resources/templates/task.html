@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>siwProject</title>
+</head>
+<body>
+<h1 th:text="${task.name}"></h1>
+<h4 th:text="${task.description}" style="color:gray"></h4>
+<div th:if="${task.completed}">completed is true.</div>
+<div th:unless="${task.completed}">completed is false.</div>
+
+
+
+
+<h4><a href="/projects">Back To My Projects</a></h4>
+
+
+
+</body>
+</html>

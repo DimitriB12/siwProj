@@ -21,7 +21,7 @@
 <h3>Tasks</h3>
 <ul>
       <li th:each="task : ${project.tasks}">
-        <div th:text="${task.name}"></div>
+        <div><a th:href="'/task/' + ${task.id}" th:text="${task.name}">..</a></div>
         <div th:text="${task.description}" style="color:gray"></div>
         <div th:if="${task.completed}">completed is true.</div>
         <div th:unless="${task.completed}">completed is false.</div>
@@ -30,7 +30,7 @@
 <h3>Tags</h3>
 <ul>
       <li th:each="tag : ${project.tags}">
-        <div th:text="${tag.name}"></div>
+        <div th:href="${tag.name}"></div>
         <div th:text="${tag.color}"></div>
         <div th:text="${tag.description}" style="color:gray"></div>
         

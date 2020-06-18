@@ -124,6 +124,36 @@ public class TaskController {
       return "myTasks";
     }
     
+    /**
+	 * This method is called when a GET request is sent by the user to URL "/task".
+	 * This method prepares and dispatches a view showing the project with the specified id.
+	 * 
+	 * @param model the Request model
+	 * @param id the Id of the Task
+	 * @return the name of the target view, in this case a redirect to "/task"
+	 */
+	@RequestMapping(value= {"/task/{taskId}"}, method = RequestMethod.GET)
+	public String task(Model model, @PathVariable Long taskId) {
+		//User loggedUser = sessionData.getLoggedUser();
+		//if no project with the passed IO exists,
+		//redirect to the view with the list of my projects
+		Task task= taskService.getTask(taskId);
+		if(task == null)
+			return "redirect:/projects";
+
+//		//if i do not have access to any project with the passed ID
+//		//redirect to the view with the list of my projects
+//		List<User> members = userService.getMembers(project);
+//		if(!project.getOwner().equals(loggedUser) && !members.contains(loggedUser))
+//			return "redirect:/projects";
+//
+//		model.addAttribute("loggedUser", loggedUser);
+//		model.addAttribute("project", project);
+		model.addAttribute("task", task);
+
+		return "task";
+	}
+    
   
     
     
