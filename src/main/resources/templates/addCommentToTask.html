@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>siwProject</title>
+</head>
+<h1>Comments</h1>
+<body>
+
+<form id="addCommentForm"
+     th:action="@{'/addComment/' +${task.id}}"
+     method="POST">
+     
+     
+     <table>
+        <tr>
+            <td><label for="commentInput">Comment text</label>
+            <td><input id="commentInput" type="text" th:field="${comment.text}" placeholder="COMMENT" /></td>
+        </tr>
+     
+        <tr>
+            <td>
+                <button type="submit">Add Comment</button>
+            </td>
+        </tr>
+    </table>
+
+         
+</form>
+
+</body>
+</html>

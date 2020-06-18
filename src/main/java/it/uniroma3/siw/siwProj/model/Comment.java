@@ -12,7 +12,7 @@ public class Comment {
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private Long Id;
 	
-	@Column(nullable= false)
+	@Column
 	private String text;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade= CascadeType.REMOVE)

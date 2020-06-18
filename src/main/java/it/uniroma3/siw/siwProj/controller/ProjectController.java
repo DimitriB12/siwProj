@@ -323,6 +323,8 @@ public class ProjectController {
 		this.taskService.deleteTask(this.taskService.findTaskByName(name));
 		return "redirect:/projects";
 	}
+	
+
 
 
 
