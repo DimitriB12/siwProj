@@ -1,5 +1,6 @@
 package it.uniroma3.siw.siwProj.service;
 
+import it.uniroma3.siw.siwProj.model.Comment;
 import it.uniroma3.siw.siwProj.model.Project;
 import it.uniroma3.siw.siwProj.model.Task;
 import it.uniroma3.siw.siwProj.model.User;
@@ -85,4 +86,10 @@ public class TaskService {
     	task.setWorker(user);
     	return this.taskRepository.save(task);
     }
+    
+    @Transactional
+	 public Task addCommentToTask(Comment comment, Task task) {
+		 task.addComment(comment);
+		 return this.taskRepository.save(task);
+	 }
 }
