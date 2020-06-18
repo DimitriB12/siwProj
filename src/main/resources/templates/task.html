@@ -11,12 +11,21 @@
 <div th:if="${task.completed}">completed is true.</div>
 <div th:unless="${task.completed}">completed is false.</div>
 
-
+<!-- <h3>Tags</h3>
+<ul>
+      <li th:each="tag : ${task.tags}">
+        <div th:href="${tag.name}"></div>
+        <div th:text="${tag.color}"></div>
+        <div th:text="${tag.description}" style="color:gray"></div>
+        
+</ul>
 
 
 <h4><a href="/projects">Back To My Projects</a></h4>
 
+<h4><a href="/task/addTag">Add Tag</a></h4>
 
+<h4><a href="/task/deleteTag">Delete Tag</a></h4>-->
 
 </body>
 </html>
