@@ -3,11 +3,13 @@ package it.uniroma3.siw.siwProj.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.uniroma3.siw.siwProj.model.Tag;
 import it.uniroma3.siw.siwProj.repository.TagRepository;
 
+@Service
 public class TagService {
 	  @Autowired
 	    protected TagRepository tagRepository;
@@ -29,7 +31,7 @@ public class TagService {
 	     * @return the saved Tag
 	     */
 	    @Transactional
-	    public Tag saveTask(Tag tag) {
+	    public Tag saveTag(Tag tag) {
 	        return this.tagRepository.save(tag);
 	    }
 
@@ -38,7 +40,7 @@ public class TagService {
 	     * @param tag the Tag to delete from the DB
 	     */
 	    @Transactional
-	    public void deleteTask(Tag tag) {
+	    public void deleteTag(Tag tag) {
 	        this.tagRepository.delete(tag);
 	    }
 	    
@@ -49,6 +51,16 @@ public class TagService {
 	    @Transactional
 	    public Tag findTagByName(String tagName) {
 	    	Optional<Tag> result = this.tagRepository.findByName(tagName);
+	    	return result.orElse(null);
+	    }
+	    
+	    /**
+	     * This method retrieves a Tag from the DB searching the color.
+	     * @param name of the Tag to retrieve from the DB
+	     */
+	    @Transactional
+	    public Tag findTagByColor(String tagColor) {
+	    	Optional<Tag> result = this.tagRepository.findByColor(tagColor);
 	    	return result.orElse(null);
 	    }
 }

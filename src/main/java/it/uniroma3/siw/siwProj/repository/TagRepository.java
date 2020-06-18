@@ -14,5 +14,7 @@ import it.uniroma3.siw.siwProj.model.Tag;
 public interface TagRepository extends CrudRepository<Tag, Long> {
 	
 	public Optional<Tag> findByName(String name);
+	
+	public Optional<Tag> findByColor(String color);
 
 }

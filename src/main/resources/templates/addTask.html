@@ -19,12 +19,12 @@
         <tr>
             <td><label for="taskNameInput">Task Name</label>
             <td><input id=taskNameInput type="text" th:field="${taskForm.name}" placeholder="TASK NAME" required/></td>
-            <td th:if="${#fields.hasErrors('taskForm.name')}" th:errors="${taskForm.name}" th:style="color:red"></td>
+            <td th:if="${#fields.hasErrors('taskForm.name')}" th:errors="${taskForm.name}" th:style="'color:red'"></td>
         </tr>
         <tr>
             <td><label for="taskDescriptiondInput">Description</label></td>
             <td><input id="taskDescriptiondInput" type="text" th:field="${taskForm.description}" placeholder="TASK DESCRIPTION"/></td>
-            <td th:if="${#fields.hasErrors('taskForm.description')}" th:errors="${taskForm.description}" th:style="color:red"></td>
+            <td th:if="${#fields.hasErrors('taskForm.description')}" th:errors="${taskForm.description}" th:style="'color:red'"></td>
        </tr>
         <tr>
             <td><label for="projectNameInput">Project Name</label></td>
