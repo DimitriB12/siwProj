@@ -92,26 +92,39 @@ public class TaskController {
     @RequestMapping(value = {"/task/assaignsTask"}, method = RequestMethod.POST)
     public String assaignsTask(Model model, @ModelAttribute("assaignsForm") ContenitoreStringhe assaignsForm) {
     
-    	User loggedUser= this.sessionData.getLoggedUser();
     	
-    	
-    	if(  this.taskService.findTaskByName(assaignsForm.getTaskName()) != null &&
+         if(  this.taskService.findTaskByName(assaignsForm.getTaskName()) != null &&
     		 this.credentialsService.getCredentials(assaignsForm.getUserName()) !=null &&
-    		 
-    			)
-
-//		if(this.projectService.findProjectByName(projectUserForm.getNameProject()) != null
-//				&& this.credentialsService.getCredentials(projectUserForm.getUserName()) !=null
-//				&& !loggedUser.equals(this.credentialsService.getCredentials(projectUserForm.getUserName()).getUser())) {
-//			Project project =	this.projectService.findProjectByName(projectUserForm.getNameProject());
-//			User user = this.credentialsService.getCredentials(projectUserForm.getUserName()).getUser();
-//			this.projectService.shareProjectWithUser(project, user);
-//			return "redirect:/projects/" + project.getId();
-//		}
+    		 this.userService.getTaskWorker(this.taskService.findTaskByName(assaignsForm.getTaskName())) == null) {
     		
-      return "/task/assaignsTask";
+    	   	Task task = this.taskService.findTaskByName(assaignsForm.getTaskName());
+    		User user = this.credentialsService.getCredentials(assaignsForm.getUserName()).getUser();
+    		
+    		for(Project project : user.getVisibleProjects()) {
+    			
+    		    	if(project.getTasks().contains(task)) {
+    			       this.userService.assaignTaskToUser(task, user);
+    			       this.taskService.addWorkerToTask(task, user);
+    			       return "redirect:/projects";
+    		     	}
+             }
+    	}
+    		 
+        return "assaignsTaskToMember";
     }
     
+    
+    //Show Logged User Tasks
+    @RequestMapping(value = {"/task/showTasks"}, method = RequestMethod.GET)
+    public String showTaskForm(Model model) {
+     User loggedUser = this.sessionData.getLoggedUser();
+     
+     model.addAttribute("tasksList", this.taskService.findTasksByUser(loggedUser));
+    		
+      return "myTasks";
+    }
+    
+  
     
     
     

@@ -55,7 +55,9 @@ public class User {
     @OneToMany(mappedBy = "worker")
     public List<Task> listTasks;
 
-    /**
+  
+
+	/**
      * The date that this User was created/loaded into the DB
      */
     @Column(updatable = false, nullable = false)
@@ -71,6 +73,9 @@ public class User {
         this.ownedProjects = new ArrayList<>();
         this.visibleProjects = new ArrayList<>();
     }
+    
+    
+    
     
     
 
@@ -156,6 +161,21 @@ public class User {
     public void setLastUpdateTimestamp(LocalDateTime lastUpdateTimestamp) {
         this.lastUpdateTimestamp = lastUpdateTimestamp;
     }
+    
+    public List<Task> getListTasks() {
+  		return listTasks;
+  	}
+    
+    public void addTask(Task task) {
+    
+    	if(!this.listTasks.contains(task))
+    		this.listTasks.add(task);
+    }
+
+
+  	public void setListTasks(List<Task> listTasks) {
+  		this.listTasks = listTasks;
+  	}
 
     // EQUALS AND HASHCODE
 

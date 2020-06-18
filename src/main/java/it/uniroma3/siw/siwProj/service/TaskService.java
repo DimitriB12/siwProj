@@ -2,12 +2,15 @@ package it.uniroma3.siw.siwProj.service;
 
 import it.uniroma3.siw.siwProj.model.Project;
 import it.uniroma3.siw.siwProj.model.Task;
+import it.uniroma3.siw.siwProj.model.User;
 import it.uniroma3.siw.siwProj.repository.TaskRepository;
+import it.uniroma3.siw.siwProj.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,6 +21,9 @@ public class TaskService {
 
     @Autowired
     protected TaskRepository taskRepository;
+    
+    @Autowired
+    protected UserRepository userRepository;
 
     /**
      * This method retrieves a Task from the DB based on its ID.
@@ -65,5 +71,18 @@ public class TaskService {
     public Task findTaskByName(String taskName) {
     	Optional<Task> result = this.taskRepository.findByName(taskName);
     	return result.orElse(null);
+    }
+    
+   
+    
+    @Transactional
+    public List<Task> findTasksByUser(User user) {
+    	return this.taskRepository.findByWorker(user);
+    }
+    
+    @Transactional
+    public Task addWorkerToTask(Task task ,User user) {
+    	task.setWorker(user);
+    	return this.taskRepository.save(task);
     }
 }

@@ -2,6 +2,7 @@ package it.uniroma3.siw.siwProj.repository;
 import org.springframework.data.repository.CrudRepository;
 
 import it.uniroma3.siw.siwProj.model.Project;
+import it.uniroma3.siw.siwProj.model.Task;
 import it.uniroma3.siw.siwProj.model.User;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public interface UserRepository extends CrudRepository<User, Long> {
      * @return the List of Users that have visibility over the passed Project
      */
     public List<User> findByVisibleProjects(Project project);
+    
+    public User findByListTasks(Task task);
+    
     
    
     

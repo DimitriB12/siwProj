@@ -154,7 +154,19 @@ public class Task {
 		this.associatedTags = associatedTags;
 	}
 
-    @Override
+	
+	
+	
+	
+    public User getWorker() {
+		return worker;
+	}
+
+	public void setWorker(User worker) {
+		this.worker = worker;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

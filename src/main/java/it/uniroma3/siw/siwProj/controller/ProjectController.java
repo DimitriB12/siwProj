@@ -283,6 +283,7 @@ public class ProjectController {
 		if(!taskBindingResult.hasErrors() && this.projectService.findProjectByName(projName.getNameProject()) != null 
 				&& listProjects.contains(this.projectService.findProjectByName(projName.getNameProject()))) {
 			Project project = this.projectService.findProjectByName(projName.getNameProject());
+			
 			project.getTasks().add(task);
 			this.taskService.saveTask(task);
 			return "redirect:/projects/" + project.getId();

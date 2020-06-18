@@ -1,5 +1,6 @@
 package it.uniroma3.siw.siwProj.service;
 import it.uniroma3.siw.siwProj.model.Project;
+import it.uniroma3.siw.siwProj.model.Task;
 import it.uniroma3.siw.siwProj.model.User;
 import it.uniroma3.siw.siwProj.repository.UserRepository;
 
@@ -62,6 +63,27 @@ public class UserService {
     	List<User> members = userRepository.findByVisibleProjects(project);
     	return members;
     }
+    
+    
+    
+    @Transactional
+    public User assaignTaskToUser(Task task, User user) {
+        user.addTask(task);
+        return this.userRepository.save(user);
+        
+    }
+    
+    @Transactional
+    public User getTaskWorker(Task task) {
+    	User user = this.userRepository.findByListTasks(task);
+    	return user;
+    	
+    }
+    
+    
+    
+    
+    
     
  
 }
