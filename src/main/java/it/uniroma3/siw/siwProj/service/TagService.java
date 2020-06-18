@@ -5,58 +5,50 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.uniroma3.siw.siwProj.model.Task;
-import it.uniroma3.siw.siwProj.repository.TaskRepository;
+import it.uniroma3.siw.siwProj.model.Tag;
+import it.uniroma3.siw.siwProj.repository.TagRepository;
 
 public class TagService {
 	  @Autowired
-	    protected TaskRepository taskRepository;
+	    protected TagRepository tagRepository;
 
 	    /**
-	     * This method retrieves a Task from the DB based on its ID.
-	     * @param id the id of the Task to retrieve from the DB
-	     * @return the retrieved Task, or null if no Task with the passed ID could be found in the DB
+	     * This method retrieves a Tag from the DB based on its ID.
+	     * @param id the id of the Tag to retrieve from the DB
+	     * @return the retrieved Tag, or null if no Tag with the passed ID could be found in the DB
 	     */
 	    @Transactional
-	    public Task getTask(long id) {
-	        Optional<Task> result = this.taskRepository.findById(id);
+	    public Tag getTag(long id) {
+	        Optional<Tag> result = this.tagRepository.findById(id);
 	        return result.orElse(null);
 	    }
 
 	    /**
-	     * This method saves a Task in the DB.
-	     * @param task the Task to save into the DB
-	     * @return the saved Task
+	     * This method saves a Tag in the DB.
+	     * @param tag the Tag to save into the DB
+	     * @return the saved Tag
 	     */
 	    @Transactional
-	    public Task saveTask(Task task) {
-	        return this.taskRepository.save(task);
+	    public Tag saveTask(Tag tag) {
+	        return this.tagRepository.save(tag);
 	    }
 
 	    /**
-	     * This method sets a Task in the DB as completed.
-	     * @param task the Task to set as completed
-	     * @return the task, after it has been set as completed and flushed in to the DB
+	     * This method deletes a Tag from the DB.
+	     * @param tag the Tag to delete from the DB
 	     */
 	    @Transactional
-	    public Task setCompleted(Task task) {
-	        task.setCompleted(true);
-	        return this.taskRepository.save(task);
-	    }
-
-
-	    /**
-	     * This method deletes a Task from the DB.
-	     * @param task the Task to delete from the DB
-	     */
-	    @Transactional
-	    public void deleteTask(Task task) {
-	        this.taskRepository.delete(task);
+	    public void deleteTask(Tag tag) {
+	        this.tagRepository.delete(tag);
 	    }
 	    
+	    /**
+	     * This method retrieves a Tag from the DB searching the name.
+	     * @param name of the Tag to retrieve from the DB
+	     */
 	    @Transactional
-	    public Task findTaskByName(String taskName) {
-	    	Optional<Task> result = this.taskRepository.findByName(taskName);
+	    public Tag findTagByName(String tagName) {
+	    	Optional<Tag> result = this.tagRepository.findByName(tagName);
 	    	return result.orElse(null);
 	    }
 }
