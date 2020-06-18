@@ -51,10 +51,19 @@ public class Project {
             cascade = CascadeType.ALL)   // if a Project is deleted, all its tasks must be deleted too
     @JoinColumn(name="project_id")
     private List<Task> tasks;
+    
+    /**
+     * Tags that this project contains
+     */
+    @OneToMany(//fetch = FetchType.EAGER //NOT ACCEPTED(RUNTIME ERROR)???    
+            cascade = CascadeType.ALL)   // if a Project is deleted, all its tags must be deleted too
+    @JoinColumn(name="project_id")
+    private List<Tag> tags;
 
     public Project() {
         this.members = new ArrayList<>();
         this.tasks = new ArrayList<>();
+        this.tags = new ArrayList<>();
     }
 
     public Project(String name, String description) {
@@ -116,7 +125,15 @@ public class Project {
         this.tasks = tasks;
     }
 
-    @Override
+    public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
+
+	@Override
     public String toString() {
 
         return "Project{" +
@@ -127,7 +144,6 @@ public class Project {
                 '}';
     }
 
-    // this is a semplification
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

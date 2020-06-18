@@ -2,6 +2,8 @@ package it.uniroma3.siw.siwProj.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -54,8 +56,17 @@ public class Task {
      */
     @Column(nullable = false)
     private LocalDateTime lastUpdateTimestamp;
+    
+    /*
+     * A List of associated Tags
+     */
+    @ManyToMany(cascade = CascadeType.REMOVE)  //if a Task is removed remove also its Tags	 
+    private List<Tag> associatedTags;
 
-    public Task() {}
+
+    public Task() {
+    	this.associatedTags= new ArrayList<>();
+    }
 
     public Task(String name,
                 String description,
@@ -134,6 +145,14 @@ public class Task {
     public void setLastUpdateTimestamp(LocalDateTime lastUpdateTimestamp) {
         this.lastUpdateTimestamp = lastUpdateTimestamp;
     }
+    
+    public List<Tag> getAssociatedTags() {
+		return associatedTags;
+	}
+
+	public void setAssociatedTags(List<Tag> associatedTags) {
+		this.associatedTags = associatedTags;
+	}
 
     @Override
     public boolean equals(Object o) {
