@@ -37,7 +37,12 @@ public class Task {
      */
     @Column(nullable = false)
     private boolean completed;
-
+    
+    /*
+     * worker that work at projects
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    public User worker;
     /**
      * Timestamp for the instant this Task was created/loaded into the DB
      */

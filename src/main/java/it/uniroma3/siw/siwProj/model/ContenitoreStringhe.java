@@ -2,9 +2,11 @@ package it.uniroma3.siw.siwProj.model;
 
 public class ContenitoreStringhe {
 	
-	public String nameProject;
+	private String nameProject;
 	
-	public String userName;
+	private String userName;
+	
+	private String taskName;
 	
 	public ContenitoreStringhe() {}
 	
@@ -28,6 +30,15 @@ public class ContenitoreStringhe {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	
+
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
 	}
 
 	@Override

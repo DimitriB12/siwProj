@@ -48,6 +48,12 @@ public class User {
      */
     @ManyToMany(mappedBy = "members")
     private List<Project> visibleProjects;
+    
+    /*
+     * The List of Tasks owned buy menbers
+     */
+    @OneToMany(mappedBy = "worker")
+    public List<Task> listTasks;
 
     /**
      * The date that this User was created/loaded into the DB
@@ -66,8 +72,7 @@ public class User {
         this.visibleProjects = new ArrayList<>();
     }
     
-//    @OneToMany(mappedBy = "tasks")
-//    public List<Task> listTasks;
+    
 
     public User(String firstName, String lastName) {
         this();
